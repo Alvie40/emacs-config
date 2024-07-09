@@ -20,11 +20,6 @@
 ;;
 (global-display-line-numbers-mode t)
 
-;; Configurar a tecla Option (⌥) como Meta no macOS
-(setq mac-option-modifier 'meta)
-(setq mac-command-modifier 'super)
-(setq ns-function-modifier 'hyper)  ;; Fn como Hyper
-
 
 ;; MELPA
 ;; Pacotes
@@ -67,9 +62,21 @@
 
 (load-theme 'dracula t)
 
+(use-package ace-window
+  :ensure t
+  :bind (("C-x o". ace-window)))
+
 ;;Shortcuts
 (global-set-key (kbd "C-<tab>") 'other-window)
+(global-set-key (kbd "M-<down>") 'enlarge-window)
+(global-set-key (kbd "M-<up>") 'shrink-window)
+(global-set-key (kbd "M-<left>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-<right>") 'shrink-window-horizontally)
 
+;; Definir uma tecla de atalho para eval-buffer
+(global-set-key (kbd "C-c e") 'eval-buffer)
+;; Configurar atalhos de teclado personalizados
+(global-set-key (kbd "C-c u") 'eval-use-package)
 
 ;; Try
 ;;
