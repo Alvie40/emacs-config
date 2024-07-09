@@ -1,0 +1,36 @@
+# Ignore arquivo de histórico de auto-completar
+ac-comphist.dat
+
+# Ignore lista de auto-salvamento
+auto-save-list/
+
+# Ignore pacotes instalados pelo ELPA/MELPA
+elpa/
+
+# Ignore diretório de backups (se existir)
+backups/
+
+# Ignore arquivos de bloqueio do Emacs
+.#*
+
+# Ignore arquivos de compilação (se existirem)
+*.elc
+
+# Ignore diretórios temporários
+temp/
+tmp/
+
+# Ignore arquivos de desktop (estado do Emacs)
+.emacs.desktop
+.emacs.desktop.lock
+
+# Ignore arquivos do Flycheck
+flycheck_*.el
+
+# Ignore arquivos de lixo
+*~
+.DS_Store
+
+# Ignore diretório de snippets (se você preferir mantê-los locais)
+snippets/
+
