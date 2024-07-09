@@ -1,0 +1,139 @@
+;;remover boas-vindas
+(setq inhibit-start-message t)
+
+;;remover menus
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+
+
+;; remover barra de rolagem
+(scroll-bar-mode -1)
+
+;;numero de linhas
+(global-linum-mode t)
+
+
+
+
+;; Ensure use-package is installed
+(require 'package)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
+
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(use-package try
+  :ensure t)
+(use-package catppuccin-theme
+  :ensure t
+  :config (load-theme #'catppuccin t ))
+
+(use-package neotree
+  :ensure t
+  :bind ("C-\\" . 'neotree-toggle))
+
+;;(global-set-key (kbd "C-S") 'save-buffer)
+
+(use-package vterm
+  :ensure t
+  :bind (:map vterm-mode-map
+  ("C-S-v" . vterm-yank)
+  ("C-S-p" . vterm-copy-mode)))
+
+(use-package vterm-toggle
+  :ensure t)
+
+(global-set-key (kbd "C-`") 'vterm-toggle)
+
+
+
+
+;; Configure and enable lsp-mode
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (python-mode . lsp-deferred)
+  :config
+  (setq lsp-prefer-flymake nil)) ;; Use lsp-ui and flycheck instead of flymake
+
+;; Install and configure lsp-ui for better UI integrations
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-use-webkit t
+        lsp-ui-doc-delay 0.2
+        lsp-ui-doc-position 'at-point
+        lsp-ui-doc-include-signature t
+        lsp-ui-sideline-enable nil
+        lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-peek-enable t
+        lsp-ui-peek-list-width 60
+        lsp-ui-peek-peek-height 25))
+
+;; Install and configure lsp-pyright
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp-deferred)))
+  :config
+  (setq lsp-pyright-multi-root nil
+        lsp-pyright-auto-import-completions t
+        lsp-pyright-use-library-code-for-types t))
+
+;; Install and configure company for autocompletion
+(use-package company
+  :config
+  (setq company-idle-delay 0.3
+        company-minimum-prefix-length 1
+        company-tooltip-align-annotations t)
+  :hook (after-init . global-company-mode))
+
+;; Use company-lsp for LSP-based completions
+(use-package company-lsp
+  :commands company-lsp)
+
+;; Install and configure flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
+;; Optionally, add pyvenv for virtual environment management
+(use-package pyvenv
+  :ensure t
+  :config
+  (setenv "WORKON_HOME" "~/.virtualenvs")
+  (pyvenv-mode 1))
+
+;; Configure and enable yasnippet
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+
+;; Optionally, add yasnippet-snippets for additional snippets
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(yasnippet-snippets yasnippet company vterm-toggle vterm try)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
